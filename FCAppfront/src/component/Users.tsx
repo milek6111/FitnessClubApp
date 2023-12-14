@@ -16,12 +16,23 @@ export const Users = () => {
     
     
     return (
-        <div>
-            {users.map(user => (
-                <div>
-                    {user.imie}
-                </div>
-            ))}
+        <div className="div__table">
+            <table>
+                <tr>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Data Urodzenia</th>
+                    <th>Telefon</th>
+                </tr>
+                {users.map(user => (
+                    <tr>
+                        <td>{user.imie}</td>
+                        <td> {user.nazwisko} </td>
+                        <td> {user.data_urodzenia} </td>
+                        <td> {user.telefon} </td>
+                    </tr>
+                ))}
+            </table>
         </div>
     )
 }

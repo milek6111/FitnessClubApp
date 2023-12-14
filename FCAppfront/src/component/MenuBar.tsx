@@ -13,19 +13,20 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import "./styles.css";
 
 const pages = [
   {
-  label: "Products",
-  path: '/'
+  label: "Kluby",
+  path: '/clubs'
   },
   {
-    label: "Pricing",
+    label: "Klienci",
     path: '/users'
   }, 
   {
-    label: "Produc",
-    path: '/dadef'
+    label: "Trenerzy",
+    path: '/trainers'
   }
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -58,7 +59,8 @@ function MenuBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            // href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -69,7 +71,7 @@ function MenuBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Fitness App
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -105,7 +107,7 @@ function MenuBar() {
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                     <Link to={page.path}> 
                       <Typography textAlign="center">
-                      {page.label} 
+                      <span className='link-button'>{page.label}</span> 
                       </Typography>
                     </Link>
                 </MenuItem>

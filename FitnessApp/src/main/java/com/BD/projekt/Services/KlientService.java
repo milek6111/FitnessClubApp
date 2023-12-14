@@ -2,6 +2,7 @@ package com.BD.projekt.Services;
 
 
 import com.BD.projekt.Entities.Klient;
+import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+@Service
 public class KlientService extends MainService {
 
     public KlientService(){

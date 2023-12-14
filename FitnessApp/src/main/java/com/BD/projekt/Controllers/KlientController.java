@@ -2,6 +2,7 @@ package com.BD.projekt.Controllers;
 
 import com.BD.projekt.Entities.Klient;
 import com.BD.projekt.Services.KlientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/klienci")
 @CrossOrigin
 public class KlientController{
+    @Autowired
     private KlientService service = new KlientService();
 
     @GetMapping("/listAll")

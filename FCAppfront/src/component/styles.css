@@ -1,0 +1,31 @@
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.div--table{
+    background-color: antiquewhite;
+}
+
+table{
+    background-color: rgb(64, 64, 63);
+    border-radius: 20px;
+    margin-top: 50px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+th{
+    width: max-content;
+    padding-left: 20px;
+    text-align: center;
+    color: white;
+    font-weight:bolder;
+}
+
+td{
+    width: max-content;
+    padding-left: 20px;
+    text-align: center;
+    color: white;
+}
