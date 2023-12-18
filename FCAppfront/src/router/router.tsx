@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Users } from "../component/Users";
 import { Clubs } from "../component/Clubs";
 import { Trainers } from "../component/Trainers";
+import { AddClub } from "../component/AddClub";
 
 export const paths = [
     {
@@ -19,6 +20,14 @@ export const paths = [
     {
         path: "/trainers",
         element: <Trainers/>
+    },
+    {
+        path: "/clubs/form",
+        element: <AddClub/>
+    },
+    {
+        path: "/clubs/*",
+        element: <div>Siema</div>  
     },
     {
         path: "*",
