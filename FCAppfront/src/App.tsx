@@ -24,8 +24,8 @@ function App() {
                 <CssBaseline />
                     <MenuBar/>
                     <Routes>
-                      {paths.map((path)=>(
-                        <Route path={path.path} element ={path.element}/>
+                      {paths.map((path,index)=>(
+                        <Route key={index} path={path.path} element ={path.element}/>
                       ))}
                     </Routes>
               </ThemeProvider>

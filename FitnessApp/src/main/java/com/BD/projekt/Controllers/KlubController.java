@@ -20,4 +20,7 @@ public class KlubController {
 
     @PostMapping("/save")
     public String saveClub(@RequestBody Klub klub){ return service.saveClub(klub);}
+
+    @GetMapping("/More")
+    public String moreInfo(@RequestParam int id){ return service.moreInfo(id);}
 }

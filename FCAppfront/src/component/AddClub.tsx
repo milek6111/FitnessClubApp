@@ -2,11 +2,15 @@ import { useState } from "react"
 import { getClubs } from "../api/datacontracts"
 import axios, { AxiosResponse } from 'axios'
 import { Save } from "@mui/icons-material"
+import { redirect, useNavigate } from "react-router-dom"
 
 export const AddClub = () =>{
     const [name,setName] = useState<string>("")
     const [city,setCity] = useState<string>("")
     const [telefon, setTelefon] = useState<string>("")
+
+    const navigate = useNavigate()
+
 
     const send = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -23,9 +27,14 @@ export const AddClub = () =>{
             club
         ).then((res: AxiosResponse<any, any>) =>{
             console.log(res)
-            alert(res.data)
+            if(res.data === 'Niepoprawny numer')
+                alert(res.data)
+            else{
+                navigate('/clubs')
+            }
         })
         console.log(club)
+
     }
 
 

@@ -4,6 +4,7 @@ package com.BD.projekt.Services;
 import com.BD.projekt.Entities.Klient;
 import com.BD.projekt.Entities.Klub;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.beans.ExceptionListener;
 import java.sql.PreparedStatement;
@@ -73,5 +74,34 @@ public class KlubService extends MainService {
 
         return "Liczba dodanych rekordów:" + affectedRows;
 
+    }
+
+    public String moreInfo(int id){
+        String sql = "SELECT\n" +
+                "    Klub.nazwa AS nazwa, " +
+                "    Klub.miasto AS miasto, " +
+                "    Klub.telefon AS telefon, " +
+                "    COUNT(DISTINCT Karnety.id_klient) AS liczba_klientow, " +
+                "    COUNT(DISTINCT Trener.id_trener) AS liczba_trenerow " +
+                "FROM projekt.Klub " +
+                "LEFT JOIN projekt.Karnety ON Klub.id_klub = Karnety.id_klub " +
+                "LEFT JOIN projekt.Trener ON Klub.id_klub = Trener.id_klub " +
+                "GROUP BY Klub.id_klub " +
+                "having Klub.id_klub = "+id;
+
+
+        StringBuilder temp = new StringBuilder("{ ");
+
+        ResultSet res = super.gueryExecutor(sql);
+        try{
+            while(res.next()) {
+                temp.append("nazwa:" + res.getString("nazwa") + ", miasto: " + res.getString("miasto") + ", telefon: " + res.getString("telefon") + ", liczba_klientow: " + res.getInt("liczba_klientow") + ", liczba_trenerow: " + res.getInt("liczba_trenerow"));
+            }
+            temp.append("}");
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        return temp.toString();
     }
 }
