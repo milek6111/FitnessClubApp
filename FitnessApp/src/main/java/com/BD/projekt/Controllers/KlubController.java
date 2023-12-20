@@ -2,10 +2,13 @@ package com.BD.projekt.Controllers;
 
 import com.BD.projekt.Entities.Klub;
 import com.BD.projekt.Services.KlubService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/kluby")
@@ -22,5 +25,5 @@ public class KlubController {
     public String saveClub(@RequestBody Klub klub){ return service.saveClub(klub);}
 
     @GetMapping("/More")
-    public String moreInfo(@RequestParam int id){ return service.moreInfo(id);}
+    public Map<String, Object> moreInfo(@RequestParam int id){ return service.moreInfo(id).toMap();}
 }

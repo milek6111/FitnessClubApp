@@ -11,13 +11,13 @@ table{
     background-color: rgb(64, 64, 63);
     border-radius: 20px;
     margin-top: 50px;
+    margin-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
 }
 
 th{
     width: max-content;
-    padding-left: 20px;
     text-align: center;
     color: white;
     font-weight:bolder;
@@ -25,7 +25,8 @@ th{
 
 td{
     width: max-content;
-    padding-left: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
     text-align: center;
     color: white;
 }
@@ -50,4 +51,14 @@ input{
 .submit{
     margin-top: 20px;
     border-radius: 10px;
+}
+
+.ClubName{
+    padding-bottom: 30px;
+}
+
+.clubs{
+    padding: 50px;
+    padding-top: 20px;
+    padding-bottom: 30px;
 }

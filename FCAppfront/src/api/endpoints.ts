@@ -19,3 +19,8 @@ export const getTrainersFn = {
     content_type: "application/json"
 }
 
+export const getClubsMoreInfo = {
+    path: baseURL + "/kluby/More",
+    method: "GET",
+    content_type: "application/json"
+}

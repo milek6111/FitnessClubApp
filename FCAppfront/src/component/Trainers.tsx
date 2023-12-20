@@ -17,6 +17,7 @@ export const Trainers = () => {
     
     return (
         <div>
+            
             <table>
                 <tr>
                     <th>Imie</th>

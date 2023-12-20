@@ -3,6 +3,8 @@ package com.BD.projekt.Services;
 
 import com.BD.projekt.Entities.Klient;
 import com.BD.projekt.Entities.Klub;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -76,7 +78,7 @@ public class KlubService extends MainService {
 
     }
 
-    public String moreInfo(int id){
+    public JSONObject moreInfo(int id){
         String sql = "SELECT\n" +
                 "    Klub.nazwa AS nazwa, " +
                 "    Klub.miasto AS miasto, " +
@@ -90,18 +92,21 @@ public class KlubService extends MainService {
                 "having Klub.id_klub = "+id;
 
 
-        StringBuilder temp = new StringBuilder("{ ");
+        JSONObject jo = new JSONObject();
 
         ResultSet res = super.gueryExecutor(sql);
         try{
             while(res.next()) {
-                temp.append("nazwa:" + res.getString("nazwa") + ", miasto: " + res.getString("miasto") + ", telefon: " + res.getString("telefon") + ", liczba_klientow: " + res.getInt("liczba_klientow") + ", liczba_trenerow: " + res.getInt("liczba_trenerow"));
+                jo.put("nazwa",res.getString("nazwa"));
+                jo.put("miasto",res.getString("miasto"));
+                jo.put("telefon",res.getString("telefon"));
+                jo.put("liczba_klientow",res.getInt("liczba_klientow"));
+                jo.put("liczba_trenerow",res.getInt("liczba_trenerow"));
             }
-            temp.append("}");
         } catch(Exception e){
             System.out.println(e);
         }
 
-        return temp.toString();
+        return jo;
     }
 }

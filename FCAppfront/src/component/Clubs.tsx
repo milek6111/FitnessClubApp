@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getClubs } from "../api/datacontracts";
-import { getClubsFn } from "../api/endpoints";
+import { getClubsFn, getClubsMoreInfo} from "../api/endpoints";
 import { Button } from "@mui/material";
 import { Link, Navigate } from "react-router-dom";
 import { TableModal } from "../partials/TableModal";
@@ -28,11 +28,33 @@ export const Clubs = () => {
     }
   }, []);
 
-//   fetch("http://localhost:8080/kluby/More?id=151")
-//   .then(res => res.json()).then(res => console.log(res))
+
+  const Info = (props: {id: number}) =>{
+
+    const [clubinfo, setClubinfo] = useState<{ liczba_klientow: number, liczba_trenerow:number, miasto: string,nazwa:string, telefon: string,}>()
+
+    useEffect(() =>{
+      fetch( getClubsMoreInfo.path + "?id=" +props.id)
+      .then(res => res.json()).then(res => {
+        setClubinfo(res) 
+      })
+    },[])
+    
+
+    return(
+      <div>
+        <p>Miasto: {clubinfo?.miasto}</p>
+        <p>Telefon: {clubinfo?.telefon}</p>
+        <p>Liczba klientów: {clubinfo?.liczba_klientow}</p>
+        <p>Liczba trenerów: {clubinfo?.liczba_trenerow}</p>
+      </div>
+    )
+
+  }
 
 
   const modalContent = modalEntity ? (
+
 
     <div
       style={{
@@ -44,9 +66,9 @@ export const Clubs = () => {
       }}
     >
       <div>
-        <p>{modalEntity.id_klub}</p>
-        <p>{modalEntity.miasto}</p>
-        <p>{modalEntity.telefon}</p>
+        
+        <Info id={modalEntity.id_klub}/>
+
       </div>
       <div style={{ alignSelf: "end" }}>
         <Button onClick={() => setIsOpen(false)} variant="contained">
@@ -58,9 +80,9 @@ export const Clubs = () => {
 
   const clubsTable = clubs.map((club) => (
     <tr>
-      <td>{club.nazwa}</td>
+      {/* <td>{club.nazwa}</td>
       <td>{club.miasto}</td>
-      <td>{club.telefon}</td>
+      <td>{club.telefon}</td> */}
       <td>
         <Button
           onClick={() => {
@@ -68,7 +90,8 @@ export const Clubs = () => {
             setIsOpen(true);
           }}
         >
-          Więcej informacji
+          {/* Więcej informacji */}
+          {club.nazwa}
         </Button>
       </td>
     </tr>
@@ -79,12 +102,12 @@ export const Clubs = () => {
       <Link to="form">
         <Button>Dodaj Klub</Button>
       </Link>
-      <table>
+      <table className="clubs">
         <tr>
-          <th>Nazwa Klubu</th>
-          <th>Lokalizacja</th>
-          <th>Telefon kontaktowy</th>
-          <th>Szczegóły</th>
+          <th className="ClubName">Nazwa Klubu</th>
+          {/* <th>Lokalizacja</th>
+          <th>Telefon kontaktowy</th> */}
+          {/* <th>Szczegóły</th> */}
         </tr>
 
         {clubsTable}

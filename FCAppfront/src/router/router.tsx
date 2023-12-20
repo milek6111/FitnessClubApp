@@ -3,6 +3,7 @@ import { Users } from "../component/Users";
 import { Clubs } from "../component/Clubs";
 import { Trainers } from "../component/Trainers";
 import { AddClub } from "../component/AddClub";
+import { AddUser } from "../component/AddUser";
 
 export const paths = [
     {
@@ -24,6 +25,10 @@ export const paths = [
     {
         path: "/clubs/form",
         element: <AddClub/>
+    },
+    {
+        path: "/users/form",
+        element: <AddUser/>
     },
     {
         path: "/clubs/*",
