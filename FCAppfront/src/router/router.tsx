@@ -4,11 +4,12 @@ import { Clubs } from "../component/Clubs";
 import { Trainers } from "../component/Trainers";
 import { AddClub } from "../component/AddClub";
 import { AddUser } from "../component/AddUser";
+import { ManageMembership } from "../component/ManageMembership";
 
 export const paths = [
     {
         path: "/",
-        element: <div> Hello World </div>
+        element: <h1 style={{marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>Witamy w aplikacji </h1>
     },
     {
         path: "/users",
@@ -31,8 +32,8 @@ export const paths = [
         element: <AddUser/>
     },
     {
-        path: "/clubs/*",
-        element: <div>Siema</div>  
+        path: "/users/manage",
+        element: <ManageMembership/>
     },
     {
         path: "*",

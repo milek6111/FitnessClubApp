@@ -21,6 +21,9 @@ th{
     text-align: center;
     color: white;
     font-weight:bolder;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: solid;
 }
 
 td{

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { getUsers } from "../api/datacontracts";
-import { getUsersFn } from "../api/endpoints";
+import { getMembershipInfo, getUsersFn } from "../api/endpoints";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Tab } from "@mui/material";
 import { TableModal } from "../partials/TableModal";
+import SelectPerson from "./SelectPerson";
 
 
 export const Users = () => {
@@ -12,14 +13,61 @@ export const Users = () => {
     const [isOpen, setIsOpen] = useState(false);
 
 
-    useEffect(()=>{
+    const fetchUsers = () => {
         fetch(getUsersFn.path).then(
             res => res.json()
         )
         .then(
             val => setUsers(val)
         )
+    }
+
+    useEffect(()=>{
+        fetchUsers()
+        const interval = setInterval(() => {
+            fetchUsers()
+        },10000) 
+        return () =>{
+            clearInterval(interval)
+        }
     },[])
+
+
+    const Membership = (props: {id: number}) =>{
+        const [membership, setMembership] = useState<{nazwa: string, data_zakupu: string, data_waznosci: string, oplata: number}[]>([])
+
+        useEffect(() =>{
+            fetch(getMembershipInfo.path + "?id=" + props.id)
+            .then(res => res.json()).then(res =>{
+                setMembership(res.sort((a:{nazwa: string, data_zakupu: string, data_waznosci: string, oplata: number},
+                                        b: {nazwa: string, data_zakupu: string, data_waznosci: string, oplata: number}) => (
+                                            new Date(a.data_waznosci) < new Date(b.data_waznosci)) ? 1 : -1 )
+                                        )
+            })
+        },[])
+
+        const content = membership.map(obj => (
+                <tr>
+                    <td>{obj.nazwa}</td>
+                    <td>{obj.data_zakupu}</td>
+                    <td>{obj.data_waznosci}</td>
+                    <td>{obj.oplata}</td>
+                </tr>
+        ))
+        
+        
+        return(
+            <table>
+                <tr>
+                    <th>Nazwa klubu</th>
+                    <th>Data zakupu</th>
+                    <th>Data waznosci</th>
+                    <th>Oplata</th>
+                </tr> 
+                {content}
+            </table>
+        )
+    }
 
     
 
@@ -37,8 +85,8 @@ export const Users = () => {
         >
           <div>
             {/* TODO: Component fetchujacy historie harnetów po numerze ID */}
-            cokolwiek
-    
+            Historia Karnetów:
+            <Membership id={modalEntity.id_klient}/>
           </div>
           <div style={{ alignSelf: "end" }}>
             <Button onClick={() => setIsOpen(false)} variant="contained">
@@ -53,6 +101,9 @@ export const Users = () => {
         <div>
             <Link to="form">
                 <Button>Dodaj Osobę</Button>
+            </Link>
+            <Link to="manage">
+                <Button >Zarządzaj karnetami</Button>
             </Link>
             <div className="div__table">
                 <table>
@@ -86,7 +137,7 @@ export const Users = () => {
                     ))}
                 </table>
                 <TableModal
-                    header={modalEntity?.imie + " " + modalEntity?.nazwisko ?? ""}
+                    header={modalEntity?.imie + " " + modalEntity?.nazwisko}
                     isOpen={isOpen}
                     onClose={() => setIsOpen(false)}
                 >
