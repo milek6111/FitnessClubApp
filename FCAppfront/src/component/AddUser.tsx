@@ -3,7 +3,7 @@ import { getUsers } from "../api/datacontracts";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { SystemSecurityUpdate } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -21,7 +21,7 @@ export const AddUser = () => {
     const navigate = useNavigate()
 
 
-    const send = async (e: React.FormEvent<HTMLFormElement>) => {
+    const send = async (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
 
@@ -56,42 +56,17 @@ export const AddUser = () => {
         <div>
             <Button onClick={(e) => navigate('/users')}>Powrót</Button>
             <div className="formdiv">
-                <form onSubmit={(e) => send(e)}>
-                    <label> Imię</label>
-                    <input type="text" 
-                        placeholder="Podaj imię"
-                        name="imie"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    /><br/>
-                    <label> Nazwisko</label>
-                    <input type="text" 
-                        placeholder="Podaj nazwisko"
-                        name="nazwisko"
-                        value={surname}
-                        onChange={(e) => setSurname(e.target.value)}
-                    /><br/>
-                    <label> Data urodzenia</label>
-                    {/* <input type="date" 
-                        placeholder="Podaj datę urodzenia"
-                        name="birth"
-                        value={birth}
-                        onChange={(e) => setBirth(e.target.value)}
-                    /><br/> */}
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker label="Wybierz datę" 
+                <form style={{width: "250px"}} >
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px",}} label="Imię" value={name} onChange={(e) => setName(e.target.value)} variant="outlined" />
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px"}} label="Nazwisko" value={surname} onChange={(e) => setSurname(e.target.value)} variant="outlined" />
+                        <LocalizationProvider  dateAdapter={AdapterDayjs}>
+                            <DatePicker sx={{marginBottom: "10px"}} label="Data urodzenia" 
                             value={birth}
                             onAccept={(val) => val && setBirth(val)}
                             />
                         </LocalizationProvider>
-                    <label> Telefon </label>                   
-                    <input type="text" 
-                        placeholder="Podaj Telefon kontaktowy"
-                        name="telefon"
-                        value={telefon}
-                        onChange={(e) => setTelefon(e.target.value)}
-                    /><br/>
-                    <input className="submit" type="submit" value="Dodaj"/>
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px"}} label="Telefon" value={telefon} onChange={(e) => setTelefon(e.target.value)} variant="outlined" />
+                    <Button onClick={(e) => send(e)}> Dodaj </Button>
                 </form>
             </div>
         </div>
