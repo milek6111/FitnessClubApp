@@ -3,10 +3,7 @@ package com.BD.projekt.Controllers;
 import com.BD.projekt.Entities.Klient;
 import com.BD.projekt.Services.KlientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,4 +19,7 @@ public class KlientController{
     public List<Klient> getKlients(){
         return service.getKlients();
     }
+
+    @PostMapping("/save")
+    public String saveKlient(@RequestBody Klient klient) { return service.saveKlient(klient);}
 }

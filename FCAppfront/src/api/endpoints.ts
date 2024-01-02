@@ -24,3 +24,9 @@ export const getClubsMoreInfo = {
     method: "GET",
     content_type: "application/json"
 }
+
+export const getMembershipInfo = {
+    path: baseURL + "/klienci/karnety/info",
+    method: "GET",
+    content_type: "application/json"
+}

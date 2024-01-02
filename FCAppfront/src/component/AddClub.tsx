@@ -3,6 +3,7 @@ import { getClubs } from "../api/datacontracts"
 import axios, { AxiosResponse } from 'axios'
 import { Save } from "@mui/icons-material"
 import { redirect, useNavigate } from "react-router-dom"
+import { Button, TextField } from "@mui/material"
 
 export const AddClub = () =>{
     const [name,setName] = useState<string>("")
@@ -12,7 +13,7 @@ export const AddClub = () =>{
     const navigate = useNavigate()
 
 
-    const send = async (e: React.FormEvent<HTMLFormElement>) => {
+    const send = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
         const club : getClubs = {
@@ -40,31 +41,16 @@ export const AddClub = () =>{
 
 
     return(
-        <div className="formdiv">
-            <form onSubmit={(e) => send(e)}>
-                <label> Nazwa klubu</label>
-                <input type="text" 
-                    placeholder="Podaj nazwe klubu"
-                    name="nazwa"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                /><br/>
-                <label> Miasto</label>
-                <input type="text" 
-                    placeholder="Podaj miasto"
-                    name="miasto"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                /><br/>
-                <label> Telefon </label>
-                <input type="text" 
-                    placeholder="Podaj Telefon kontaktowy"
-                    name="telefon"
-                    value={telefon}
-                    onChange={(e) => setTelefon(e.target.value)}
-                /><br/>
-                <input className="submit" type="submit" value="Dodaj"/>
-            </form>
+        <div>
+            <Button onClick={(e) => navigate('/clubs')}>Powrót</Button>
+            <div className="formdiv">
+                <form style={{width: "250px"}} >
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px",}} label="Nazwa klubu" value={name} onChange={(e) => setName(e.target.value)} variant="outlined" />
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px",}} label="Miasto" value={city} onChange={(e) => setCity(e.target.value)} variant="outlined" />
+                    <TextField id="outlined-basic" sx={{marginBottom: "10px",}} label="Telefon" value={telefon} onChange={(e) => setTelefon(e.target.value)} variant="outlined" />
+                    <Button onClick={(e) => send(e)}>Dodaj</Button>
+                </form>
+            </div>
         </div>
     )
 }
