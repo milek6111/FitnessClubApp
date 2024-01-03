@@ -54,6 +54,14 @@ export const Users = () => {
                     <td>{obj.oplata}</td>
                 </tr>
         ))
+
+        if(membership.length === 0){
+            return(
+                <div >
+                    Brak karnetów
+                </div>
+            )
+        }
         
         
         return(
@@ -122,9 +130,7 @@ export const Users = () => {
                             <td> {user.telefon} </td>
                             <td>
                                 <Button
-                                onClick={() => {
-                                    //TODO
-                    
+                                onClick={() => {                  
                                     setModalEntity(user);
                                     setIsOpen(true);
                                 }}

@@ -3,10 +3,7 @@ package com.BD.projekt.Controllers;
 import com.BD.projekt.Entities.Trener;
 import com.BD.projekt.Services.TrenerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,4 +17,10 @@ public class TrenerController {
     public List<Trener> getTrainers(){
         return service.getTrainers();
     }
+
+    @GetMapping("/More")
+    public List<Object> getInfo(@RequestParam int id) {return service.getInfo(id).toList();}
+
+    @PostMapping("/save")
+    public String saveTrainer(@RequestBody Trener trener) {return service.saveTrainer(trener);}
 }

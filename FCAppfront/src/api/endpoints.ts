@@ -30,3 +30,27 @@ export const getMembershipInfo = {
     method: "GET",
     content_type: "application/json"
 }
+
+export const getTrainerMoreInfo = {
+    path: baseURL + "/trenerzy/More",
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const getClassesInfo = {
+    path: baseURL + "/harmonogram/getAll",
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const getClassesThisWeekInfo = {
+    path: baseURL + "/harmonogram/thisWeek",
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const getAllClasses = {
+    path: baseURL + "/zajecia/all",
+    method: "GET",
+    content_type: "application/json"
+}
