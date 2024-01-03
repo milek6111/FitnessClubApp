@@ -30,6 +30,7 @@ export default function SelectClubAuto(props: {
       disablePortal
       id="combo-box-demo"
       onChange={(e,val) => {if(val) props.setSelectedClub(val.label,val.id); else props.setSelectedClub(" ",-1) }}
+
       value={props.selectedClub}
       options={options}
       sx={{ width: 300 , marginBottom: "10px" }}

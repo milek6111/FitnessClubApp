@@ -31,6 +31,7 @@ export const getMembershipInfo = {
     content_type: "application/json"
 }
 
+
 export const getTrainerMoreInfo = {
     path: baseURL + "/trenerzy/More",
     method: "GET",
@@ -54,3 +55,4 @@ export const getAllClasses = {
     method: "GET",
     content_type: "application/json"
 }
+
