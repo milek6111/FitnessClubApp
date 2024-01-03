@@ -9,6 +9,7 @@ import { ManageMembership } from "../component/ManageMembership";
 import { AddTrainer } from "../component/AddTrainer";
 import { Harmonogram } from "../component/Hamonogram";
 import { AddClass } from "../component/AddClass";
+import { AddTimeTable } from "../component/AddTimeTable";
 
 
 export const paths = [
@@ -52,6 +53,10 @@ export const paths = [
         path: "classes/newClass",
         element: <AddClass/>
 
+    },
+    {
+        path: "classes/form",
+        element: <AddTimeTable/>
     },
     {
         path: "*",

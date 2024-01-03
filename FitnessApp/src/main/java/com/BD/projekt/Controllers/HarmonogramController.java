@@ -1,11 +1,9 @@
 package com.BD.projekt.Controllers;
 
 import com.BD.projekt.Services.ZajeciaService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.json.JSONArray;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,4 +18,7 @@ public class HarmonogramController {
 
     @GetMapping("/thisWeek")
     public List<Object> getThisWeek(){ return service.getThisWeek().toList();}
+
+    @PostMapping("/save")
+    public String saveDateTime(@RequestBody JsonNode object) { return service.saveDateTime(object); }
 }

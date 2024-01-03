@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react"
 import { getTrainers} from "../api/datacontracts";
-import { getTrainerMoreInfo, getTrainersFn, getUsersFn } from "../api/endpoints";
+import { deleteTrainer, getTrainerMoreInfo, getTrainersFn, getUsersFn } from "../api/endpoints";
 import { Button } from "@mui/material";
 import { TableModal } from "../partials/TableModal";
 import { Link } from "react-router-dom";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import axios from "axios";
 
 
 export const Trainers = () => {
     const [trainers, setTrainers] = useState<getTrainers[]>([])
     const [modalEntity, setModalEntity] = useState<getTrainers>();
+    const [secondModalEntity, setSecondModalEntity] = useState<getTrainers>();
     const [isOpen, setIsOpen] = useState(false);
+    const [isOpen2, setIsOpen2] = useState(false);
+
+
+    const deleteT = () => {
+
+        axios.delete(deleteTrainer.path + `?id=${secondModalEntity?.id_trener}`).then(
+            response => {
+                alert(response.data);
+            }
+        )
+        //console.log("deleted")
+    }
 
 
 
@@ -95,6 +110,32 @@ export const Trainers = () => {
           </div>
         </div>
       ) : null;
+
+      const modalContent2 = secondModalEntity ? (
+
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            height: "100%",
+            flexDirection: "column",
+            width: "100%",
+          }}
+        >
+          <div>
+            Czy napewno chcesz usunąć powyższego trenera z listy?
+          </div>
+          <div style={{ alignSelf: "end" }}>
+            <Button onClick={() => {deleteT(); setIsOpen2(false)}} variant="contained">
+              Tak
+            </Button>
+            <Button onClick={() => setIsOpen2(false)} variant="contained">
+              Nie
+            </Button>
+          </div>
+        </div>
+      ) : null;
     
     
     return (
@@ -109,6 +150,7 @@ export const Trainers = () => {
                     <th>Data Urodzenia</th>
                     <th>Telefon</th>
                     <th>Szczegóły</th>
+                    <th>Usuń</th>
                 </tr>
                 {trainers.map(trainer => (
                     <tr>
@@ -124,6 +166,17 @@ export const Trainers = () => {
                                 >
                                 Więcej informacji
                         </Button>
+                        <td>
+                            <Button
+                                onClick={() =>{
+                                    setSecondModalEntity(trainer);
+                                    setIsOpen2(true)
+                                }}
+                            >
+                                <DeleteForeverIcon></DeleteForeverIcon>
+                            </Button>
+                        </td>
+                        
                     </tr>
                 ))}
             </table>
@@ -133,6 +186,13 @@ export const Trainers = () => {
                     onClose={() => setIsOpen(false)}
                 >
                     {modalContent}
+            </TableModal>
+            <TableModal
+                    header={secondModalEntity?.imie + " " + secondModalEntity?.nazwisko}
+                    isOpen={isOpen2}
+                    onClose={() => setIsOpen2(false)}
+                >
+                    {modalContent2}
             </TableModal>
         </div>
     )

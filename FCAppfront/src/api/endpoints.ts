@@ -1,5 +1,5 @@
 
-const baseURL = "http://localhost:8080";
+export const baseURL = "http://localhost:8080";
 
 export const getUsersFn = {
     path: baseURL + "/klienci/listAll" ,
@@ -56,3 +56,14 @@ export const getAllClasses = {
     content_type: "application/json"
 }
 
+export const getAllClassesInfo = {
+    path: baseURL + "/zajecia/getAll",
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const deleteTrainer = {
+    path: baseURL + "/trenerzy/delete",
+    method: "DELETE",
+    content_type: "application/json"
+}

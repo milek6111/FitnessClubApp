@@ -23,4 +23,7 @@ public class TrenerController {
 
     @PostMapping("/save")
     public String saveTrainer(@RequestBody Trener trener) {return service.saveTrainer(trener);}
+
+    @DeleteMapping("/delete")
+    public String deleteTrainer(@RequestParam int id) { return service.deleteTrainer(id); }
 }

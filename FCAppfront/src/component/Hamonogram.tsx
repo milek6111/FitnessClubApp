@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import WeekPicker from "./WeekPicker"
 import axios from "axios"
 import { Block, FeedTwoTone } from "@mui/icons-material"
-import { getClassesInfo, getClassesThisWeekInfo } from "../api/endpoints"
+import { getAllClasses, getAllClassesInfo, getClassesInfo, getClassesThisWeekInfo } from "../api/endpoints"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -15,7 +15,7 @@ export const Harmonogram = () => {
     
 
     const fetchClasses = () =>{
-        fetch(getClassesInfo.path).then(
+        fetch(getAllClasses.path).then(
             res => res.json()
         )
         .then(
@@ -24,7 +24,7 @@ export const Harmonogram = () => {
     }
 
     const fetchAllClasses = () =>{
-        fetch(getClassesInfo.path).then(
+        fetch(getAllClassesInfo.path).then(
             res => res.json()
         )
         .then(
@@ -116,7 +116,7 @@ export const Harmonogram = () => {
                     ))}
                 </table>}
                 {weekvis && <table id="week">
-                    <td>nazwa zajęć</td>
+                    <th>nazwa zajęć</th>
                     <th>klub</th>
                     <th>trener</th>
                     <th>dzień</th>

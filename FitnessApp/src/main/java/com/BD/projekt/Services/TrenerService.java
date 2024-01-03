@@ -108,4 +108,47 @@ public class TrenerService extends MainService{
         return "OK";
     }
 
+    public String deleteTrainer(int id){
+        //TODO: Usuwanie rekordow z harmonogramu
+        String sql =  "DELETE FROM projekt.Harmonogram WHERE id_zajecia IN (SELECT id_zajecia FROM projekt.Zajecia WHERE id_trener = ?)";
+        int affectedRows = 0;
+
+        try{
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            affectedRows = ps.executeUpdate();
+            System.out.println(affectedRows);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        sql = "DELETE FROM projekt.zajecia where id_trener = ?";
+        affectedRows = 0;
+        try{
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            affectedRows = ps.executeUpdate();
+            System.out.println(affectedRows);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+
+
+        sql = "DELETE FROM projekt.trener where id_trener = ?";
+
+        try{
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            affectedRows = ps.executeUpdate();
+            System.out.println(affectedRows);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        if(affectedRows == 0) return "Nie udało się usunąć trenera";
+
+        return "Pomyślnie usunięto trenera";
+    }
+
 }
