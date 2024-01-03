@@ -27,6 +27,10 @@ const pages = [
   {
     label: "Trenerzy",
     path: '/trainers'
+  },
+  {
+    label: "Harmonogram zajęć",
+    path: "/classes"
   }
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
