@@ -151,4 +151,19 @@ public class TrenerService extends MainService{
         return "Pomyślnie usunięto trenera";
     }
 
+    public List<Trener> getClubTrainers(int id){
+        List<Trener> temp = new ArrayList<>();
+
+        ResultSet res = super.gueryExecutor("Select * from projekt.Trener where id_klub = " + id);
+        try{
+            while(res.next()) {
+                temp.add(new Trener(res.getInt("id_trener"), res.getInt("id_klub"), res.getString("imie"), res.getString("nazwisko"), res.getDate("data_urodzenia").toLocalDate(), res.getString("telefon")));
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        return temp;
+    }
+
 }

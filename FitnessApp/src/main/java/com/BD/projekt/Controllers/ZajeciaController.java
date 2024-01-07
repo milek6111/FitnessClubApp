@@ -19,8 +19,14 @@ public class ZajeciaController {
     @GetMapping("/all")
     public List<Object> getAll(){ return service.getAllClasses().toList(); }
 
+    @GetMapping("/allFromClub")
+    public List<Object> getClubAll(@RequestParam int id){ return service.getClubAllClasses(id).toList(); }
+
     @GetMapping("/getAll")
     public List<Object> getAllClassesinfo(){ return service.getAllClassesInfo().toList(); }
+
+    @GetMapping("/getAllFromClub")
+    public List<Object> getClubAllClassesinfo(@RequestParam int id){ return service.getClubAllClassesInfo(id).toList(); }
 
     @PostMapping("/save")
     public String newClass(@RequestBody JsonNode object){ return service.addClass(object); }

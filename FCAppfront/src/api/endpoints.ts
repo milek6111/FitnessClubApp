@@ -7,6 +7,12 @@ export const getUsersFn = {
     content_type: "application/json"
 }
 
+export const getClubUsersFn = {
+    path: baseURL + "/klienci/listAllFromClub" ,
+    method: "GET",
+    content_type: "application/json"
+}
+
 export const getClubsFn = {
     path: baseURL + "/kluby/listAll" ,
     method: "GET",
@@ -15,6 +21,12 @@ export const getClubsFn = {
 
 export const getTrainersFn = {
     path: baseURL + "/trenerzy/listAll" ,
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const getClubTrainersFn = {
+    path: baseURL + "/trenerzy/listAllFromClub" ,
     method: "GET",
     content_type: "application/json"
 }
@@ -50,14 +62,32 @@ export const getClassesThisWeekInfo = {
     content_type: "application/json"
 }
 
+export const getClubClassesThisWeekInfo = {
+    path: baseURL + "/harmonogram/thisWeekFromClub",
+    method: "GET",
+    content_type: "application/json"
+}
+
 export const getAllClasses = {
     path: baseURL + "/zajecia/all",
     method: "GET",
     content_type: "application/json"
 }
 
+export const getCluballClasses = {
+    path: baseURL + "/zajecia/allFromClub",
+    method: "GET",
+    content_type: "application/json"
+}
+
 export const getAllClassesInfo = {
     path: baseURL + "/zajecia/getAll",
+    method: "GET",
+    content_type: "application/json"
+}
+
+export const getClubAllClassesInfo = {
+    path: baseURL + "/zajecia/getAllFromClub",
     method: "GET",
     content_type: "application/json"
 }

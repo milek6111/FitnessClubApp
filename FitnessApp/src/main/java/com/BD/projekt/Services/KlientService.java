@@ -72,7 +72,7 @@ public class KlientService extends MainService {
     }
 
     public JSONArray getMembershipInfo(int id){
-        String sql = "select kb.nazwa, kt.data_zakupu, kt.data_waznosci, kt.oplata from projekt.klient kl join projekt.karnety kt on kl.id_klient = kt.id_klient\n" +
+        String sql = "select kb.id_klub,  kb.nazwa, kt.data_zakupu, kt.data_waznosci, kt.oplata from projekt.klient kl join projekt.karnety kt on kl.id_klient = kt.id_klient\n" +
                 "join projekt.Klub kb on kt.id_klub = kb.id_klub where kl.id_klient = " + id;
 
 
@@ -83,6 +83,7 @@ public class KlientService extends MainService {
         try{
             while(res.next()){
                 jo = new JSONObject();
+                jo.put("id_klub", res.getInt("id_klub"));
                 jo.put("nazwa", res.getString("nazwa"));
                 jo.put("data_zakupu", res.getString("data_zakupu"));
                 jo.put("data_waznosci", res.getString("data_waznosci"));
@@ -199,6 +200,21 @@ public class KlientService extends MainService {
 
 
         return "OK";
+    }
+
+    public List<Klient> getClubKlients(int id){
+        List<Klient> temp = new ArrayList<>();
+
+        ResultSet res = super.gueryExecutor("Select distinct kl.id_klient, kl.imie, kl.nazwisko, kl.data_urodzenia, kl.telefon from projekt.klient kl join projekt.karnety  ka on kl.id_klient  = ka.id_klient where id_klub = "+ id);
+        try{
+            while(res.next()) {
+                temp.add(new Klient(res.getInt("id_klient"), res.getString("imie"), res.getString("nazwisko"), res.getDate("data_urodzenia").toLocalDate(), res.getString("telefon")));
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
+
+        return temp;
     }
 
 

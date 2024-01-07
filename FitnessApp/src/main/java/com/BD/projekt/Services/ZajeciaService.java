@@ -51,6 +51,36 @@ public class ZajeciaService extends MainService{
         return ja;
     }
 
+    public JSONArray getClubAllClasses(int id){
+        String sql = "select za.nazwa as nazwa, kl.nazwa as klub, tr.imie as imie, tr.nazwisko as nazwisko, \n" +
+                "ha.data as \"data\", ha.start as \"start\", ha.koniec as \"end\" from projekt.Harmonogram ha join\n" +
+                "projekt.zajecia za on ha.id_zajecia = za.id_zajecia join\n" +
+                "projekt.trener tr on tr.id_trener = za.id_trener join\n" +
+                "projekt.klub kl on za.id_klub = kl.id_klub where kl.id_klub = " + id;
+        ResultSet res = super.gueryExecutor(sql);
+
+        JSONArray ja = new JSONArray();
+        JSONObject jo = null;
+
+        try{
+
+            while(res.next()){
+                jo = new JSONObject();
+                jo.put("nazwa",res.getString("nazwa"));
+                jo.put("klub", res.getString("klub"));
+                jo.put("trener",res.getString("imie") + " " + res.getString("nazwisko"));
+                jo.put("data",res.getDate("data"));
+                jo.put("start", res.getTime("start"));
+                jo.put("end", res.getTime("end"));
+                ja.put(jo);
+            }
+
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return ja;
+    }
+
     public JSONArray getThisWeek(){
 
         LocalDate today = LocalDate.now();
@@ -68,6 +98,50 @@ public class ZajeciaService extends MainService{
                 "projekt.zajecia za on ha.id_zajecia = za.id_zajecia join\n" +
                 "projekt.trener tr on tr.id_trener = za.id_trener join\n" +
                 "projekt.klub kl on za.id_klub = kl.id_klub";
+        ResultSet res = super.gueryExecutor(sql);
+
+        JSONArray ja = new JSONArray();
+        JSONObject jo = null;
+
+        try{
+
+            while(res.next()){
+                LocalDate date = res.getDate("data").toLocalDate();
+                if((date.isAfter(monday) || date.isEqual(monday)) &&(date.isBefore(sunday) || date.isEqual(sunday))) {
+                    jo = new JSONObject();
+                    jo.put("nazwa",res.getString("nazwa"));
+                    jo.put("klub", res.getString("klub"));
+                    jo.put("trener", res.getString("imie") + " " + res.getString("nazwisko"));
+                    jo.put("data",res.getDate("data").toLocalDate().getDayOfWeek().getDisplayName(TextStyle.FULL,new Locale("pl","PL")));
+                    jo.put("start", res.getTime("start"));
+                    jo.put("end", res.getTime("end"));
+                    ja.put(jo);
+                }
+            }
+
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return ja;
+    }
+
+    public JSONArray getClubThisWeek(int id){
+
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today;
+        while(monday.getDayOfWeek() != DayOfWeek.MONDAY){
+            monday = monday.minusDays(1);
+        }
+        LocalDate sunday = today;
+        while(sunday.getDayOfWeek() != DayOfWeek.SUNDAY){
+            sunday = sunday.plusDays(1);
+        }
+
+        String sql = "select za.nazwa as nazwa, kl.nazwa as klub, tr.imie as imie, tr.nazwisko as nazwisko, \n" +
+                "ha.data as \"data\", ha.start as \"start\", ha.koniec as \"end\" from projekt.Harmonogram ha join\n" +
+                "projekt.zajecia za on ha.id_zajecia = za.id_zajecia join\n" +
+                "projekt.trener tr on tr.id_trener = za.id_trener join\n" +
+                "projekt.klub kl on za.id_klub = kl.id_klub where kl.id_klub = " + id;
         ResultSet res = super.gueryExecutor(sql);
 
         JSONArray ja = new JSONArray();
@@ -142,6 +216,35 @@ public class ZajeciaService extends MainService{
         String sql = "select distinct za.id_zajecia as id_zajecia, za.nazwa as nazwa,kl.id_klub as id_klub, kl.nazwa as klub,tr.id_trener as id_trener, tr.imie as imie, tr.nazwisko as nazwisko from projekt.zajecia za join " +
                 "                projekt.trener tr on tr.id_trener = za.id_trener join " +
                 "                projekt.klub kl on za.id_klub = kl.id_klub";
+        ResultSet res = super.gueryExecutor(sql);
+
+        JSONArray ja = new JSONArray();
+        JSONObject jo = null;
+
+        try{
+
+            while(res.next()){
+                jo = new JSONObject();
+                jo.put("nazwa",res.getString("nazwa"));
+                jo.put("id_klub",res.getInt("id_klub"));
+                jo.put("id_trener",res.getInt("id_trener"));
+                jo.put("klub", res.getString("klub"));
+                jo.put("trener",res.getString("imie") + " " + res.getString("nazwisko"));
+                jo.put("id_zajecia",res.getInt("id_zajecia"));
+                ja.put(jo);
+            }
+
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return ja;
+
+    }
+
+    public JSONArray getClubAllClassesInfo(int id){
+        String sql = "select distinct za.id_zajecia as id_zajecia, za.nazwa as nazwa,kl.id_klub as id_klub, kl.nazwa as klub,tr.id_trener as id_trener, tr.imie as imie, tr.nazwisko as nazwisko from projekt.zajecia za join " +
+                "                projekt.trener tr on tr.id_trener = za.id_trener join " +
+                "                projekt.klub kl on za.id_klub = kl.id_klub where kl.id_klub = "+id;
         ResultSet res = super.gueryExecutor(sql);
 
         JSONArray ja = new JSONArray();

@@ -18,6 +18,11 @@ public class TrenerController {
         return service.getTrainers();
     }
 
+    @GetMapping("/listAllFromClub")
+    public List<Trener> getClubTrainers(@RequestParam int id){
+        return service.getClubTrainers(id);
+    }
+
     @GetMapping("/More")
     public List<Object> getInfo(@RequestParam int id) {return service.getInfo(id).toList();}
 

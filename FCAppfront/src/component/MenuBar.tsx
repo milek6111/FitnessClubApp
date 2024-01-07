@@ -12,8 +12,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import "./styles.css";
+import { useStepContext } from '@mui/material';
+import { getClubsFn } from '../api/endpoints';
 
 const pages = [
   {
@@ -33,11 +35,45 @@ const pages = [
     path: "/classes"
   }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
+
 
 function MenuBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [clubs, setClubs] = React.useState<{nazwa: string, id_klub: number}[]>([{nazwa: "Admin", id_klub: 0}]);
+  const [chosenRole, setChodenRole] = React.useState<{nazwa: string, id_klub: number}>({nazwa: "Admin", id_klub: 0})
+
+  const navigate = useNavigate()
+
+  let settings = [{nazwa: "ADMIN", id_klub: 0}];
+
+  let nonAdminPages = [
+    {
+      label: "Klienci",
+      path: `/cusers/${chosenRole.id_klub}`
+    },
+    {
+      label: "Trenerzy",
+      path: `ctrainers/${chosenRole.id_klub}`
+    }, 
+    {
+      label: "Harmonogram zajęć",
+      path: `/cclasses/${chosenRole.id_klub}`
+    }
+  ];
+
+  const fetchClubs = () => {
+    fetch(getClubsFn.path).then(
+      res => res.json()
+    )
+    .then(
+      res => setClubs(res)
+    )
+    settings = [...settings, ...clubs]
+  }
+  fetchClubs()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -63,8 +99,9 @@ function MenuBar() {
             variant="h6"
             noWrap
             component="a"
-            // href="#app-bar-with-responsive-menu"
+            //href="#app-bar-with-responsive-menu"
             href="/"
+
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -75,7 +112,10 @@ function MenuBar() {
               textDecoration: 'none',
             }}
           >
-            Fitness App
+            {/* Fitness App */}
+            {
+              chosenRole.nazwa
+            }
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -107,7 +147,7 @@ function MenuBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {chosenRole.id_klub ==0  && pages.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
                     <Link to={page.path}> 
                       <Typography textAlign="center">
@@ -116,6 +156,16 @@ function MenuBar() {
                     </Link>
                 </MenuItem>
               ))}
+
+              {chosenRole.id_klub !=0  && nonAdminPages.map((page) => (
+                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                    <Link to={page.path}> 
+                      <Typography textAlign="center">
+                      <span className='link-button'>{page.label}</span> 
+                      </Typography>
+                    </Link>
+                </MenuItem>
+              ))} 
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -135,10 +185,22 @@ function MenuBar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            {chosenRole.nazwa}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {chosenRole.id_klub == 0 &&  pages.map((page) => (
+              <Button
+                key={page.label}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link to={page.path}> 
+                  {page.label} 
+                </Link>
+              </Button>
+            ))}
+
+            {chosenRole.id_klub != 0 &&  nonAdminPages.map((page) => (
               <Button
                 key={page.label}
                 onClick={handleCloseNavMenu}
@@ -173,9 +235,10 @@ function MenuBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              
+              {settings.map((club : {nazwa: string, id_klub: number}) => (
+                <MenuItem key={club.id_klub} onClick= {() => {setChodenRole(club); console.log(club.id_klub); navigate("/"); handleCloseUserMenu();}}>
+                  <Typography textAlign="center">{club.nazwa}</Typography>
                 </MenuItem>
               ))}
             </Menu>

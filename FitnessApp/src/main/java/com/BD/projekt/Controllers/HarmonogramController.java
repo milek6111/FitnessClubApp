@@ -19,6 +19,9 @@ public class HarmonogramController {
     @GetMapping("/thisWeek")
     public List<Object> getThisWeek(){ return service.getThisWeek().toList();}
 
+    @GetMapping("/thisWeekFromClub")
+    public List<Object> getClubThisWeek(@RequestParam int id){ return service.getClubThisWeek(id).toList();}
+
     @PostMapping("/save")
     public String saveDateTime(@RequestBody JsonNode object) { return service.saveDateTime(object); }
 }

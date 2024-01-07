@@ -20,6 +20,9 @@ public class KlientController{
         return service.getKlients();
     }
 
+    @GetMapping("/listAllFromClub")
+    public List<Klient> getClubKlients(@RequestParam int id) { return service.getClubKlients(id); }
+
     @PostMapping("/save")
     public String saveKlient(@RequestBody Klient klient) { return service.saveKlient(klient);}
 }
